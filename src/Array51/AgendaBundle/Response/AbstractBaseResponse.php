@@ -3,61 +3,63 @@
 namespace Array51\AgendaBundle\Response;
 
 use JMS\Serializer\Annotation as JMS;
-use FOS\RestBundle\Util\Codes;
 
 class AbstractBaseResponse
 {
     /**
-     * @var int
+     * @var bool
      *
-     * @JMS\Exclude
+     * @JMS\Type("boolean")
+     * @JMS\SerializedName("success")
      */
-    protected $httpCode = Codes::HTTP_OK;
+    protected $success = true;
 
     /**
      * @var string
-     *)
-     * @JMS\SerializedName("message")
+     *
+     * @JMS\Type("string")
+     * @JMS\SerializedName("errorMessage")
      */
-    protected $message = '';
+    protected $errorMessage;
 
     /**
      * @var array
-    ")
+     *
+     * @JMS\Type("array")
      * @JMS\SerializedName("errors")
      */
-    protected $errors = array();
+    protected $errors;
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getHttpCode()
+    public function getSuccess()
     {
-        return $this->httpCode;
+        return $this->success;
     }
 
     /**
-     * @param int $httpCode
+     * @param int $success
      */
-    public function setHttpCode($httpCode)
+    public function setSuccess($success)
     {
-        $this->httpCode = $httpCode;
+        $this->success = $success;
     }
 
     /**
      * @return string
      */
-    public function getMessage()
+    public function getErrorMessage()
     {
-        return $this->message;
+        return $this->errorMessage;
     }
 
     /**
-     * @param string $message
+     * @param string $errorMessage
      */
-    public function setMessage($message)
+    public function setErrorMessage($errorMessage)
     {
-        $this->message = $message;
+        $this->errorMessage = $errorMessage;
     }
 
     /**
