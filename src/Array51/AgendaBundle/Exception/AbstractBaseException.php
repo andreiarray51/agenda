@@ -2,7 +2,7 @@
 
 namespace Array51\AgendaBundle\Exception;
 
-abstract class AbstractBaseException extends \ErrorException
+abstract class AbstractBaseException extends \Exception
 {
     /**
      * @var array
