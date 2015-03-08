@@ -3,10 +3,11 @@
 namespace Array51\AgendaBundle\EventListener;
 
 use JMS\Serializer\Serializer;
-use FOS\RestBundle\Util\Codes;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Array51\AgendaBundle\Response\Error\ErrorResponse;
+use FOS\RestBundle\Util\Codes;
 use Array51\AgendaBundle\Exception\AbstractBaseException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Array51\AgendaBundle\Response\Error\ErrorResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExceptionListener
@@ -39,6 +40,11 @@ class ExceptionListener
             $statusCode = Codes::HTTP_BAD_REQUEST;
             $message = $exception->getMessage();
             $errorResponse->setErrors($exception->getErrors());
+        }
+
+        if ($exception instanceof HttpException) {
+            $statusCode = $exception->getStatusCode();
+            $message = $exception->getMessage();
         }
 
         $errorResponse->setErrorMessage($message);
