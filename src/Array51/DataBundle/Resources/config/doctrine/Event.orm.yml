@@ -1,0 +1,51 @@
+Array51\DataBundle\Entity\Event:
+    type: entity
+    table: events
+    repositoryClass: Array51\DataBundle\Repository\EventRepository
+    indexes:
+        created_at:
+            columns:
+                - created_at
+        due_created_at:
+            columns:
+                - due
+                - created_at
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 250
+            fixed: false
+            comment: ''
+        description:
+            type: text
+            nullable: false
+            length: null
+            fixed: false
+            comment: ''
+        due:
+            type: datetime
+            nullable: false
+            comment: ''
+        createdAt:
+            column: created_at
+            type: datetime
+            nullable: false
+            comment: ''
+        updatedAt:
+            column: updated_at
+            type: datetime
+            nullable: false
+            comment: ''
+            default: '0000-00-00 00:00:00'
+    lifecycleCallbacks:
+        prePersist: [setCreatedAtValue]
