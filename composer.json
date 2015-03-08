@@ -26,7 +26,8 @@
         "nelmio/api-doc-bundle": "~2.8"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "phpunit/phpunit": "4.5.*"
     },
     "scripts": {
         "post-root-package-install": [
