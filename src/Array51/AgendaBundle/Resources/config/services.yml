@@ -1,0 +1,5 @@
+services:
+    api.base_service:
+        class: Array51\AgendaBundle\Service\AbstractBaseService
+        arguments: [@service_container]
+        abstract: true
