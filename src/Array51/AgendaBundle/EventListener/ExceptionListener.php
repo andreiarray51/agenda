@@ -45,9 +45,13 @@ class ExceptionListener
         $errorResponse = new ErrorResponse();
 
         if ($exception instanceof AbstractBaseException) {
-            $statusCode = Codes::HTTP_BAD_REQUEST;
             $message = $exception->getMessage();
-            $errorResponse->setErrors($exception->getErrors());
+
+            $exceptionOptions = $exception->getOptions();
+            $errorResponse->setErrors($exceptionOptions['errors']);
+
+            $statusCode = $exceptionOptions['status_code'] ?:
+                Codes::HTTP_BAD_REQUEST;
         } elseif ($exception instanceof HttpException) {
             $statusCode = $exception->getStatusCode();
             $message = $exception->getMessage();

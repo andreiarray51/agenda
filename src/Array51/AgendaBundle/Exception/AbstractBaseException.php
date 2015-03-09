@@ -7,30 +7,33 @@ abstract class AbstractBaseException extends \Exception
     /**
      * @var array
      */
-    private $errors = [];
+    private $options = [
+        'errors' => [],
+        'status_code' => null,
+    ];
 
     /**
      * @param string $message
-     * @param array $errors
      * @param int $code
      * @param \Exception $previous
+     * @param array $options
      */
     public function __construct(
         $message,
         $code = 0,
         \Exception $previous = null,
-        array $errors = []
+        array $options = []
     ) {
         parent::__construct($message, $code, $previous);
 
-        $this->errors = $errors;
+        $this->options = array_merge($this->options, $options);
     }
 
     /**
      * @return array
      */
-    public function getErrors()
+    public function getOptions()
     {
-        return $this->errors;
+        return $this->options;
     }
 }
