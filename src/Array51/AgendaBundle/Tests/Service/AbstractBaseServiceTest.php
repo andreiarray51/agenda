@@ -22,9 +22,4 @@ abstract class AbstractBaseServiceTest extends \PHPUnit_Framework_TestCase
             ->setMockClassName('ContainerInterface')
             ->getMock();
     }
-
-    public function testXx()
-    {
-        $this->markTestSkipped();
-    }
 }
