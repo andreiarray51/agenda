@@ -14,7 +14,7 @@ class CreateResponse extends AbstractBaseResponse
     /**
      * @param array $event
      */
-    public function __construct($event)
+    public function __construct(array $event)
     {
         $this->event = new EventResponse($event);
     }

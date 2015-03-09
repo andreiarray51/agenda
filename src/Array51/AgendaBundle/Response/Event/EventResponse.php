@@ -57,7 +57,7 @@ class EventResponse
     /**
      * @param array $event
      */
-    public function __construct($event)
+    public function __construct(array $event)
     {
         $this->setId($event['id']);
         $this->setName($event['name']);
