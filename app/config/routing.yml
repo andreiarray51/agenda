@@ -1,7 +1,3 @@
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /doc
-
-app:
-    resource: @AppBundle/Controller/
-    type:     annotation
