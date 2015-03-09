@@ -28,6 +28,34 @@ class EventController extends Controller
     /**
      * @ApiDoc(
      *  resource=true,
+     *  description="Get event by id",
+     *  requirements={
+     *      {"name"="id", "dataType"="integer", "required"="true"}
+     *  },
+     * statusCodes={
+     *      200="Returned when successful retrieved event",
+     *      404={
+     *          "Returned when event not found",
+     *          "Returned when bad event id format sent"
+     *    }
+     *  }
+     * )
+     *
+     * @View(statusCode=200)
+     *
+     * @param int $id
+     * @return \FOS\RestBundle\View\View
+     */
+    public function getAction($id)
+    {
+        $event = $this->eventService->getById($id);
+
+        return new GetResponse($event);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
      *  description="Create new event",
      *  parameters={
      *      {"name"="name", "dataType"="text", "required"="true"},

@@ -2,3 +2,10 @@ events_create:
     path:     /events
     defaults: { _controller: api.event_controller:createAction}
     methods:  [POST]
+
+events_get:
+    path:     /events/{id}
+    defaults: { _controller: api.event_controller:getAction}
+    methods:  [GET]
+    requirements:
+      id: \d+
