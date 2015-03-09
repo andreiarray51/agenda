@@ -9,3 +9,8 @@ services:
         class: Array51\AgendaBundle\Service\AbstractBaseService
         arguments: [@service_container]
         abstract: true
+
+    api.form_service:
+        class: Array51\AgendaBundle\Service\FormService
+        calls:
+          - [setFormFactory, [@form.factory]]
