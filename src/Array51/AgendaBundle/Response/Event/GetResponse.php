@@ -3,11 +3,14 @@
 namespace Array51\AgendaBundle\Response\Event;
 
 use Array51\AgendaBundle\Response\AbstractBaseResponse;
+use JMS\Serializer\Annotation as JMS;
 
 class GetResponse extends AbstractBaseResponse
 {
     /**
      * @var EventResponse
+     *
+     * @JMS\SerializedName("event")
      */
     private $event;
 
