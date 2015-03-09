@@ -88,7 +88,13 @@ doctrine_migrations:
 fos_rest:
     param_fetcher_listener: true
     body_listener: true
-    format_listener: true
+    format_listener:
+        rules:
+            -
+                path: '^/'
+                priorities: ['json', 'xml']
+                fallback_format: json
+                prefer_extension: false
     routing_loader:
         default_format: json
         include_format: false
