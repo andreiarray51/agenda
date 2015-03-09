@@ -1,0 +1,9 @@
+Array51\DataBundle\Entity\Event:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+    properties:
+        name:
+            - NotBlank: ~
+        due:
+            - NotBlank: ~
+            - Date: ~
