@@ -1,6 +1,6 @@
-agenda:
-    resource: "@AgendaBundle/Resources/config/routing.yml"
-    prefix:   /
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /doc
 
 app:
     resource: @AppBundle/Controller/
