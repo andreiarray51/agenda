@@ -53,7 +53,7 @@ class ExceptionListener
             $message = $exception->getMessage();
         } else {
             $statusCode = Codes::HTTP_INTERNAL_SERVER_ERROR;
-            $message = 'Sorry, a server error has occurred';
+            $message = sprintf('Sorry, a server error has occurred (%d)', time());
             $this->logError($request, $statusCode, $message);
         }
 
