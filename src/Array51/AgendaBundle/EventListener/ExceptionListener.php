@@ -75,12 +75,12 @@ class ExceptionListener
      */
     private function logError(Request $request, $statusCode, $message)
     {
-        $logEntry = array(
+        $logEntry = [
             'status_code' => $statusCode,
             'message' => $message,
             'query' => $request->query->all(),
             'request' => $request->request->all(),
-        );
+        ];
         $this->logger->error(serialize($logEntry));
     }
 }
