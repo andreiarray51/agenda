@@ -36,11 +36,12 @@ class FormService
     /**
      * @param string|object $type
      * @param object $data
+     * @param array $options
      * @return $this
      */
-    public function create($type = 'form', $data = null)
+    public function create($type = 'form', $data = null, array $options = [])
     {
-        $this->form = $this->formFactory->create($type, $data);
+        $this->form = $this->formFactory->create($type, $data, $options);
 
         return $this;
     }
