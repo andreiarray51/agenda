@@ -13,6 +13,6 @@ class AbstractEntityRepository extends EntityRepository
      */
     protected function getCacheId(Query $query)
     {
-        return md5($query->getSQL());
+        return md5($query->getSQL().serialize($query->getParameters()));
     }
 }
