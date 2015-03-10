@@ -1,0 +1,4 @@
+services:
+    api.event_controller:
+        class: Array51\AgendaBundle\Controller\EventController
+        arguments: [@api.event_service]

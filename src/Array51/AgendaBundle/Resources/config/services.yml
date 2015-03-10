@@ -1,32 +1,5 @@
-services:
-    kernel.listener.agenda_exception_listener:
-        class: Array51\AgendaBundle\EventListener\ExceptionListener
-        arguments: [@serializer, @logger]
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
-
-    api.base_service:
-        class: Array51\AgendaBundle\Service\AbstractBaseService
-        arguments: [@service_container]
-        abstract: true
-
-    api.event_service:
-        class: Array51\AgendaBundle\Service\EventService
-        calls:
-          - [setFormService, [@api.form_service]]
-          - [setEventRepository, [@=service('doctrine.orm.default_entity_manager').getRepository('DataBundle:Event')]]
-        parent: api.base_service
-
-    api.form_service:
-        class: Array51\AgendaBundle\Service\FormService
-        calls:
-          - [setFormFactory, [@form.factory]]
-
-    api.event_controller:
-        class: Array51\AgendaBundle\Controller\EventController
-        arguments: [@api.event_service]
-
-    api.form.type.event:
-        class: Array51\AgendaBundle\Form\Type\EventType
-        tags:
-            - { name: form.type, alias: event }
+imports:
+    - { resource: services/controllers.yml }
+    - { resource: services/forms.yml }
+    - { resource: services/listeners.yml }
+    - { resource: services/services.yml }
