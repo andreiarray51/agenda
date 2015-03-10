@@ -3,9 +3,9 @@
 namespace Array51\AgendaBundle\Service;
 
 use Array51\DataBundle\Entity\Event;
+use Array51\AgendaBundle\Exception\EventNotFoundException;
 use Array51\AgendaBundle\Exception\InvalidEventException;
 use Array51\DataBundle\Repository\EventRepository;
-use Array51\AgendaBundle\Exception\EventNotFoundException;
 
 class EventService extends AbstractBaseService
 {
@@ -37,19 +37,30 @@ class EventService extends AbstractBaseService
 
     /**
      * @param array $data
+     * @param int $id
      * @return int
+     * @throws EventNotFoundException
      * @throws InvalidEventException
      */
-    public function save($data)
+    public function save($data, $id = null)
     {
-        $event = new Event();
+        if (null == $id) {
+            $event = new Event();
+        } else {
+            $event = $this->eventRepository->find($id);
+
+            if (null == $event) {
+                throw new EventNotFoundException();
+            }
+        }
+
         $this->formService
-            ->create('event', $event)
-            ->submit($data);
+            ->create('event', $event, ['allow_extra_fields' => true,])
+            ->submit($data, false);
 
         if (!$this->formService->isValid()) {
             $errors = $this->formService->getErrors();
-            throw new InvalidEventException('Invalid event data', $errors);
+            throw new InvalidEventException($errors);
         }
 
         $this->eventRepository->save($event);
@@ -67,7 +78,7 @@ class EventService extends AbstractBaseService
         try {
             return $this->eventRepository->getById($id);
         } catch (\Exception $e) {
-            throw new EventNotFoundException('Event not found');
+            throw new EventNotFoundException();
         }
     }
 

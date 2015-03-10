@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\Request;
 use Array51\AgendaBundle\Response\Event\GetResponse;
 use Array51\AgendaBundle\Response\Event\CreateResponse;
+use Array51\AgendaBundle\Response\Event\UpdateResponse;
 use Array51\AgendaBundle\Response\Event\ListResponse;
 
 class EventController extends Controller
@@ -90,6 +91,49 @@ class EventController extends Controller
         $event = $this->eventService->getById($eventId);
 
         return new CreateResponse($event);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Update event",
+     *  requirements={
+     *      {"name"="id", "dataType"="integer", "required"="true"}
+     *  },
+     *  parameters={
+     *      {"name"="name", "dataType"="text", "required"="false"},
+     *      {"name"="description", "dataType"="text", "required"="false"},
+     *      {
+     *          "name"="due",
+     *          "dataType"="text",
+     *          "required"="true",
+     *          "format"="Y-m-d",
+     *          "description"="Date event is due at"
+     *      }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful updated event",
+     *      400={
+     *          "Returned when invalid parameters sent",
+     *          "Returned when invalid json sent",
+     *      },
+     *      404="Returned when event not found",
+     *  }
+     * )
+     *
+     * @View(statusCode=200)
+     *
+     * @param Request $request
+     * @param int $id
+     * @return CreateResponse
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $data = $request->request->all();
+        $eventId = $this->eventService->save($data, $id);
+        $event = $this->eventService->getById($eventId);
+
+        return new UpdateResponse($event);
     }
 
     /**

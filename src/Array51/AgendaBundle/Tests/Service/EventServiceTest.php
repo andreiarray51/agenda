@@ -38,7 +38,7 @@ class EventServiceTest extends AbstractBaseServiceTest
             'Array51\DataBundle\Repository\EventRepository'
         )
             ->setMockClassName('EventRepository')
-            ->setMethods(['save', 'getById', 'getAll', 'countAll'])
+            ->setMethods(['save', 'getById', 'getAll', 'countAll', 'find'])
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -46,10 +46,9 @@ class EventServiceTest extends AbstractBaseServiceTest
     /**
      * @param $data
      * @param $event
-     * @param $expected
      * @dataProvider dataSaveSuccess
      */
-    public function testSaveNewSuccess($data, $event, $expected)
+    public function testSaveNewSuccess($data, $event)
     {
         $this->formService->expects($this->once())
             ->method('create')
@@ -72,9 +71,7 @@ class EventServiceTest extends AbstractBaseServiceTest
         $eventService = new EventService($this->container);
         $eventService->setFormService($this->formService);
         $eventService->setEventRepository($this->eventRepository);
-        $eventId = $eventService->save($data);
-
-        $this->assertEquals($expected, $eventId);
+        $eventService->save($data);
     }
 
     /**
@@ -83,7 +80,7 @@ class EventServiceTest extends AbstractBaseServiceTest
      * @expectedException \Array51\AgendaBundle\Exception\InvalidEventException
      * @dataProvider dataSaveFail
      */
-    public function testSaveNewFail($data, $event, $errors)
+    public function testSaveNewFail($data, $event)
     {
         $this->formService->expects($this->once())
             ->method('create')
@@ -107,6 +104,61 @@ class EventServiceTest extends AbstractBaseServiceTest
         $eventService->setFormService($this->formService);
         $eventService->setEventRepository($this->eventRepository);
         $eventService->save($data);
+    }
+
+    /**
+     * @param int $eventId
+     * @param array $data
+     * @param array $event
+     * @dataProvider dataUpdateSuccess
+     */
+    public function testUpdateSuccess($eventId, $data, $event)
+    {
+        $this->eventRepository->expects($this->once())
+            ->method('find')
+            ->with($eventId)
+            ->will($this->returnValue($event));
+
+        $this->formService->expects($this->once())
+            ->method('create')
+            ->with('event', $event)
+            ->will($this->returnValue($this->formService));
+
+        $this->formService->expects($this->once())
+            ->method('submit')
+            ->with($data)
+            ->will($this->returnValue($this->formService));
+
+        $this->formService->expects($this->once())
+            ->method('isValid')
+            ->will($this->returnValue(true));
+
+        $this->eventRepository->expects($this->once())
+            ->method('save')
+            ->with($event);
+
+        $eventService = new EventService($this->container);
+        $eventService->setFormService($this->formService);
+        $eventService->setEventRepository($this->eventRepository);
+        $eventService->save($data, $eventId);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function testUpdateNotFound()
+    {
+        $eventId = 1;
+        $data = [];
+
+        $this->eventRepository->expects($this->once())
+            ->method('find')
+            ->with($eventId)
+            ->will($this->returnValue(null));
+
+        $eventService = new EventService($this->container);
+        $eventService->setEventRepository($this->eventRepository);
+        $eventService->save($data, $eventId);
     }
 
     /**
@@ -199,15 +251,12 @@ class EventServiceTest extends AbstractBaseServiceTest
             'due' => '2015-03-08',
         ];
 
-        $event = new Event($data);
-
-        $expected = $event->getId(1);
+        $event = new Event();
 
         return [
             [
                 $data,
                 $event,
-                $expected,
             ]
         ];
     }
@@ -222,7 +271,7 @@ class EventServiceTest extends AbstractBaseServiceTest
             'due' => '2015-03-08',
         ];
 
-        $event = new Event($data);
+        $event = new Event();
 
         $errors = [
             'property' => 'message',
@@ -233,6 +282,33 @@ class EventServiceTest extends AbstractBaseServiceTest
                 $data,
                 $event,
                 $errors,
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function dataUpdateSuccess()
+    {
+        $eventId = 1;
+
+        $data = [
+            'name' => 'New event',
+            'description' => 'New event description text',
+            'due' => '2015-03-08',
+        ];
+
+        $event = new Event();
+        $event->setName('Old name');
+        $event->setDescription('Old description');
+        $event->setDue(new \DateTime('2015-03-08'));
+
+        return [
+            [
+                $eventId,
+                $data,
+                $event,
             ]
         ];
     }

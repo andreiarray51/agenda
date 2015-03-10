@@ -3,6 +3,13 @@ events_create:
     defaults: { _controller: api.event_controller:createAction}
     methods:  [POST]
 
+events_update:
+    path:     /events/{id}
+    defaults: { _controller: api.event_controller:updateAction}
+    methods:  [PATCH]
+    requirements:
+      id: \d+
+
 events_get:
     path:     /events/{id}
     defaults: { _controller: api.event_controller:getAction}
