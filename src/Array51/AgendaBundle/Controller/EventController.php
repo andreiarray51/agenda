@@ -45,7 +45,7 @@ class EventController extends Controller
      * @View(statusCode=200)
      *
      * @param int $id
-     * @return \FOS\RestBundle\View\View
+     * @return GetResponse
      */
     public function getAction($id)
     {
@@ -81,7 +81,7 @@ class EventController extends Controller
      * @View(statusCode=201)
      *
      * @param Request $request
-     * @return \FOS\RestBundle\View\View
+     * @return CreateResponse
      */
     public function createAction(Request $request)
     {
