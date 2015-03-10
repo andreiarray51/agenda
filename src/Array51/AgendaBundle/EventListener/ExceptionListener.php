@@ -53,11 +53,11 @@ class ExceptionListener
             $statusCode = $exceptionOptions['status_code'] ?:
                 Codes::HTTP_BAD_REQUEST;
         } elseif ($exception instanceof HttpException) {
-            $statusCode = $exception->getStatusCode();
             $message = $exception->getMessage();
+            $statusCode = $exception->getStatusCode();
         } else {
-            $statusCode = Codes::HTTP_INTERNAL_SERVER_ERROR;
             $message = sprintf('Sorry, a server error has occurred (%d)', time());
+            $statusCode = Codes::HTTP_INTERNAL_SERVER_ERROR;
             $this->logError($request, $statusCode, $message);
         }
 
