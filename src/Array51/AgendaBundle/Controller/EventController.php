@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Array51\AgendaBundle\Response\Event\GetResponse;
 use Array51\AgendaBundle\Response\Event\CreateResponse;
 use Array51\AgendaBundle\Response\Event\UpdateResponse;
+use Array51\AgendaBundle\Response\Event\DeleteResponse;
 use Array51\AgendaBundle\Response\Event\ListResponse;
 
 class EventController extends Controller
@@ -134,6 +135,34 @@ class EventController extends Controller
         $event = $this->eventService->getById($eventId);
 
         return new UpdateResponse($event);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Delete event by id",
+     *  requirements={
+     *      {"name"="id", "dataType"="integer", "required"="true"}
+     *  },
+     * statusCodes={
+     *      200="Returned when successful deleted event",
+     *      400={
+     *          "Returned when invalid parameters sent",
+     *      },
+     *      404="Returned when event not found",
+     *  }
+     * )
+     *
+     * @View(statusCode=200)
+     *
+     * @param int $id
+     * @return DeleteResponse
+     */
+    public function deleteAction($id)
+    {
+        $this->eventService->deleteById($id);
+
+        return new DeleteResponse();
     }
 
     /**

@@ -83,6 +83,21 @@ class EventService extends AbstractBaseService
     }
 
     /**
+     * @param int $id
+     * @throws EventNotFoundException
+     */
+    public function deleteById($id)
+    {
+        /** @var Event $event */
+        $event = $this->eventRepository->find($id);
+        if (null == $event) {
+            throw new EventNotFoundException();
+        }
+
+        $this->eventRepository->delete($event);
+    }
+
+    /**
      * @param int $offset
      * @param int $limit
      * @param array $filters

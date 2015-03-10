@@ -6,6 +6,7 @@ use Array51\AgendaBundle\Service\FormService;
 use Array51\DataBundle\Repository\EventRepository;
 use Array51\AgendaBundle\Service\EventService;
 use Array51\DataBundle\Entity\Event;
+use Array51\AgendaBundle\Exception\EventNotFoundException;
 
 class EventServiceTest extends AbstractBaseServiceTest
 {
@@ -38,7 +39,7 @@ class EventServiceTest extends AbstractBaseServiceTest
             'Array51\DataBundle\Repository\EventRepository'
         )
             ->setMockClassName('EventRepository')
-            ->setMethods(['save', 'getById', 'getAll', 'countAll', 'find'])
+            ->setMethods(['save', 'getById', 'getAll', 'countAll', 'find', 'delete'])
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -197,6 +198,43 @@ class EventServiceTest extends AbstractBaseServiceTest
         $result = $eventService->getById($event['id']);
 
         $this->assertEquals($expected, $result);
+    }
+
+    public function testDeleteByIdSuccess()
+    {
+        $eventId = 1;
+        $event = new Event();
+
+        $this->eventRepository->expects($this->once())
+            ->method('find')
+            ->with($eventId)
+            ->will($this->returnValue($event));
+
+        $this->eventRepository->expects($this->once())
+            ->method('delete')
+            ->with($event);
+
+        $eventService = new EventService($this->container);
+        $eventService->setEventRepository($this->eventRepository);
+        $eventService->deleteById($eventId);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws EventNotFoundException
+     */
+    public function testDeleteByIdNotFound()
+    {
+        $eventId = 1;
+        $event = null;
+
+        $this->eventRepository->expects($this->once())
+            ->method('find')
+            ->with($eventId);
+
+        $eventService = new EventService($this->container);
+        $eventService->setEventRepository($this->eventRepository);
+        $eventService->deleteById($eventId);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Array51\DataBundle\Repository;
 
 use Array51\DataBundle\Entity\Event;
+use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 
 class EventRepository extends AbstractEntityRepository
@@ -42,6 +43,16 @@ class EventRepository extends AbstractEntityRepository
             ->useResultCache(true, $this->getCacheId($query));
 
         return $query->getSingleResult();
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function delete($event)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($event);
+        $em->flush();
     }
 
     /**

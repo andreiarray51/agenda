@@ -17,6 +17,13 @@ events_get:
     requirements:
       id: \d+
 
+events_delete:
+    path:     /events/{id}
+    defaults: { _controller: api.event_controller:deleteAction}
+    methods:  [DELETE]
+    requirements:
+      id: \d+
+
 events_list:
     path:     /events
     defaults: { _controller: api.event_controller:listAction}
