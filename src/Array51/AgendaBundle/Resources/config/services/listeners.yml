@@ -1,0 +1,6 @@
+services:
+    kernel.listener.agenda_token_listener:
+          class: Array51\AgendaBundle\EventListener\TokenListener
+          arguments: ["%tokens%"]
+          tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
