@@ -125,7 +125,7 @@ class EventController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return CreateResponse
+     * @return UpdateResponse
      */
     public function updateAction(Request $request, $id)
     {
