@@ -70,4 +70,24 @@ class EventService extends AbstractBaseService
             throw new EventNotFoundException('Event not found');
         }
     }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param array $filters
+     * @return array
+     */
+    public function getAll($offset = null, $limit = null, array $filters = [])
+    {
+        return $this->eventRepository->getAll($offset, $limit, $filters);
+    }
+
+    /**
+     * @param array $filters
+     * @return int
+     */
+    public function countAll(array $filters = [])
+    {
+        return $this->eventRepository->countAll($filters);
+    }
 }

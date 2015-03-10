@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpFoundation\Request;
 use Array51\AgendaBundle\Response\Event\GetResponse;
 use Array51\AgendaBundle\Response\Event\CreateResponse;
+use Array51\AgendaBundle\Response\Event\ListResponse;
 
 class EventController extends Controller
 {
@@ -89,5 +90,54 @@ class EventController extends Controller
         $event = $this->eventService->getById($eventId);
 
         return new CreateResponse($event);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get events list ordered by due and created date",
+     *  parameters={
+     *      {
+     *          "name"="due",
+     *          "dataType"="text",
+     *          "required"="false",
+     *          "format"="Y-m-d",
+     *          "description"="Date event is due at"
+     *      },
+     *      {
+     *          "name"="offset",
+     *          "dataType"="integer",
+     *          "required"="false",
+     *          "description"="Position to retrieve events from"
+     *      },
+     *      {
+     *          "name"="limit",
+     *          "dataType"="integer",
+     *          "required"="false",
+     *          "description"="Number of events to retrieve"
+     *      }
+     *  },
+     * statusCodes={
+     *      200="Returned when successful retrieved event"
+     *  }
+     * )
+     *
+     * @View(statusCode=200)
+     *
+     * @param Request $request
+     * @return ListResponse
+     */
+    public function listAction(Request $request)
+    {
+        $offset = $request->get('offset');
+        $limit = $request->get('offset');
+        $filters = [
+            'due' => $request->get('due'),
+        ];
+
+        $events = $this->eventService->getAll($offset, $limit, $filters);
+        $total = $this->eventService->countAll($filters);
+
+        return new ListResponse($events, $total);
     }
 }

@@ -38,7 +38,7 @@ class EventServiceTest extends AbstractBaseServiceTest
             'Array51\DataBundle\Repository\EventRepository'
         )
             ->setMockClassName('EventRepository')
-            ->setMethods(['save', 'getById'])
+            ->setMethods(['save', 'getById', 'getAll', 'countAll'])
             ->disableOriginalConstructor()
             ->getMock();
     }
@@ -148,6 +148,46 @@ class EventServiceTest extends AbstractBaseServiceTest
     }
 
     /**
+     * @param array $data
+     * @param array $expected
+     * @dataProvider dataGetAll
+     */
+    public function testGetAll($data, $expected)
+    {
+        $this->eventRepository->expects($this->once())
+            ->method('getAll')
+            ->with($data['offset'], $data['limit'], $data['filters'])
+            ->will($this->returnValue($data['events']));
+
+        $eventService = new EventService($this->container);
+        $eventService->setEventRepository($this->eventRepository);
+        $result = $eventService->getAll(
+            $data['offset'],
+            $data['limit'],
+            $data['filters']
+        );
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCountAll()
+    {
+        $total = 10;
+
+        $this->eventRepository->expects($this->once())
+            ->method('countAll')
+            ->with([])
+            ->will($this->returnValue($total));
+
+        $eventService = new EventService($this->container);
+        $eventService->setEventRepository($this->eventRepository);
+        $result = $eventService->countAll();
+
+        $this->assertEquals($total, $result);
+        $this->assertInternalType('integer', $result);
+    }
+
+    /**
      * @return array
      */
     public function dataSaveSuccess()
@@ -216,6 +256,50 @@ class EventServiceTest extends AbstractBaseServiceTest
                 $event,
                 $expected,
             ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function dataGetAll()
+    {
+        $data1 = [
+            'offset' => 0,
+            'limit' => 10,
+            'filters' => [
+                'due' => '2015-03-10',
+            ],
+            'events' => [
+                [
+                    'id' => 'Event name',
+                    'due' => new \DateTime('2015-03-10'),
+                ],
+                [
+                    'id' => 'Other Event name',
+                    'due' => new \DateTime('2015-03-10'),
+                ],
+            ],
+        ];
+        $expected1 = $data1['events'];
+
+        $data2 = [
+            'offset' => 0,
+            'limit' => 0,
+            'filters' => [],
+            'events' => [],
+        ];
+        $expected2 = $data2['events'];
+
+        return [
+            [
+                $data1,
+                $expected1,
+            ],
+            [
+                $data2,
+                $expected2,
+            ],
         ];
     }
 }

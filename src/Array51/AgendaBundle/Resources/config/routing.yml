@@ -9,3 +9,8 @@ events_get:
     methods:  [GET]
     requirements:
       id: \d+
+
+events_list:
+    path:     /events
+    defaults: { _controller: api.event_controller:listAction}
+    methods:  [GET]
