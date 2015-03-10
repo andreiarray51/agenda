@@ -94,7 +94,7 @@ class ListEventResponse
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = strlen($description) > 0 ? $description : '';
     }
 
     /**
