@@ -1,0 +1,6 @@
+services:
+    kernel.listener.agenda_exception_listener:
+        class: Array51\AgendaBundle\EventListener\ExceptionListener
+        arguments: [@serializer, @logger]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

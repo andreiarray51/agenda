@@ -1,5 +1,6 @@
 imports:
     - { resource: config.yml }
+    - { resource: "@AgendaBundle/Resources/config/services/listeners_prod.yml" }
 
 framework:
     validation:
