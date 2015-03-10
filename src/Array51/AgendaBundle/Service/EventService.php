@@ -46,17 +46,20 @@ class EventService extends AbstractBaseService
     {
         if (null == $id) {
             $event = new Event();
+
+            $clearMissingData = true;
         } else {
             $event = $this->eventRepository->find($id);
-
             if (null == $event) {
                 throw new EventNotFoundException();
             }
+
+            $clearMissingData = false;
         }
 
         $this->formService
             ->create('event', $event, ['allow_extra_fields' => true,])
-            ->submit($data, false);
+            ->submit($data, $clearMissingData);
 
         if (!$this->formService->isValid()) {
             $errors = $this->formService->getErrors();
