@@ -1,0 +1,30 @@
+events_create:
+    path:     /events
+    defaults: { _controller: api.event_controller:createAction}
+    methods:  [POST]
+
+events_update:
+    path:     /events/{id}
+    defaults: { _controller: api.event_controller:updateAction}
+    methods:  [PATCH]
+    requirements:
+      id: \d+
+
+events_get:
+    path:     /events/{id}
+    defaults: { _controller: api.event_controller:getAction}
+    methods:  [GET]
+    requirements:
+      id: \d+
+
+events_delete:
+    path:     /events/{id}
+    defaults: { _controller: api.event_controller:deleteAction}
+    methods:  [DELETE]
+    requirements:
+      id: \d+
+
+events_list:
+    path:     /events
+    defaults: { _controller: api.event_controller:listAction}
+    methods:  [GET]

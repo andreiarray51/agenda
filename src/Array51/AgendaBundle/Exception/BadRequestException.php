@@ -12,7 +12,7 @@ class BadRequestException extends AbstractBaseException
      */
     public function __construct(
         $message,
-        array $errors,
+        array $errors = [],
         $code = 0,
         \Exception $previous = null
     ) {

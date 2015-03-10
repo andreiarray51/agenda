@@ -8,6 +8,8 @@ REST API
 Functions
 --------------
 
+Version 1.0
+
 Events
 
   * Add
@@ -17,6 +19,9 @@ Events
   * Delete
 
   * List
+
+
+Version 1.1
 
 Calendar
 

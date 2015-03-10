@@ -3,7 +3,6 @@
 namespace Array51\DataBundle\Repository;
 
 use Array51\DataBundle\Entity\Event;
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 
 class EventRepository extends AbstractEntityRepository
@@ -48,7 +47,7 @@ class EventRepository extends AbstractEntityRepository
     /**
      * @param Event $event
      */
-    public function delete($event)
+    public function delete(Event $event)
     {
         $em = $this->getEntityManager();
         $em->remove($event);
@@ -102,5 +101,27 @@ class EventRepository extends AbstractEntityRepository
             ->useResultCache(true, $this->getCacheId($query));
 
         return $query->getSingleScalarResult();
+    }
+
+    /**
+     * @param string $year YYYY
+     * @param string $month mm
+     * @return array
+     */
+    public function getEventsCountByMonthDays($year, $month)
+    {
+        $query = $this->createQueryBuilder('e')
+            ->select('COUNT(e.id) events, e.due date')
+            ->andWhere('YEAR(e.due) = :year')
+            ->andWhere('MONTH(e.due) = :month')
+            ->setParameter('year', $year)
+            ->setParameter('month', $month)
+            ->groupBy('e.due')
+            ->getQuery();
+
+        $query->useQueryCache(true)
+            ->useResultCache(true, $this->getCacheId($query));
+
+        return $query->getResult();
     }
 }

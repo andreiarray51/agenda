@@ -11,6 +11,12 @@ services:
           - [setEventRepository, [@=service('doctrine.orm.default_entity_manager').getRepository('DataBundle:Event')]]
         parent: api.base_service
 
+    api.calendar_service:
+        class: Array51\AgendaBundle\Service\CalendarService
+        calls:
+          - [setEventRepository, [@=service('doctrine.orm.default_entity_manager').getRepository('DataBundle:Event')]]
+        parent: api.base_service
+
     api.form_service:
         class: Array51\AgendaBundle\Service\FormService
         calls:

@@ -1,0 +1,5 @@
+events_list_v1_1_0:
+    path:     /calendar
+    defaults: { _controller: api.calendar_controller_v1_1:calendarAction}
+    methods:  [GET]
+    condition: "request.get('v') === '1.1'"

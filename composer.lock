@@ -4,8 +4,43 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e18d99d7f727daa24a3a308bcef2ff21",
+    "hash": "152051344f2d5314fa1f980eb4d00a1f",
     "packages": [
+        {
+            "name": "beberlei/DoctrineExtensions",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beberlei/DoctrineExtensions.git",
+                "reference": "f2024137f24786ce07a98acdf277a3904f3fec2a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beberlei/DoctrineExtensions/zipball/f2024137f24786ce07a98acdf277a3904f3fec2a",
+                "reference": "f2024137f24786ce07a98acdf277a3904f3fec2a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "doctrine/orm": "<2.2",
+                "phpunit/phpunit": "~4.5",
+                "zf1/zend-date": "~1.12",
+                "zf1/zend-registry": "~1.12"
+            },
+            "suggest": {
+                "zf1/zend-date": "Alternative to DateTime"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "DoctrineExtensions": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2015-03-09 13:23:41"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.3",
@@ -3308,7 +3343,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "doctrine/migrations": 20,
-        "doctrine/doctrine-migrations-bundle": 20
+        "doctrine/doctrine-migrations-bundle": 20,
+        "beberlei/doctrineextensions": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

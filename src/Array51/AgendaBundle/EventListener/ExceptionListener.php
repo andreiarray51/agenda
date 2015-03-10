@@ -48,7 +48,10 @@ class ExceptionListener
             $message = $exception->getMessage();
 
             $exceptionOptions = $exception->getOptions();
-            $errorResponse->setErrors($exceptionOptions['errors']);
+            $errors = $exceptionOptions['errors'];
+            if (count($errors) > 0) {
+                $errorResponse->setErrors($exceptionOptions['errors']);
+            }
 
             $statusCode = $exceptionOptions['status_code'] ?:
                 Codes::HTTP_BAD_REQUEST;
