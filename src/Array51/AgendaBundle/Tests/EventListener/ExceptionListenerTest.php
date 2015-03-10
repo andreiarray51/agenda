@@ -9,7 +9,6 @@ use FOS\RestBundle\Util\Codes;
 use Array51\AgendaBundle\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Array51\AgendaBundle\Response\Error\ErrorResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
