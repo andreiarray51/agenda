@@ -133,7 +133,7 @@ class EventServiceTest extends AbstractBaseServiceTest
      * @param array $expected
      * @dataProvider dataGetById
      */
-    public function testGetByIdSNotFound($event, $expected)
+    public function testGetByIdNotFound($event, $expected)
     {
         $this->eventRepository->expects($this->once())
             ->method('getById')
