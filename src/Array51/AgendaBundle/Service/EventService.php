@@ -108,6 +108,9 @@ class EventService extends AbstractBaseService
      */
     public function getAll($offset = null, $limit = null, array $filters = [])
     {
+        $offset = $this->prepareValue($offset);
+        $limit = $this->prepareValue($limit);
+
         return $this->eventRepository->getAll($offset, $limit, $filters);
     }
 
@@ -118,5 +121,18 @@ class EventService extends AbstractBaseService
     public function countAll(array $filters = [])
     {
         return $this->eventRepository->countAll($filters);
+    }
+
+    /**
+     * @param mixed $value
+     * @return null|int
+     */
+    private function prepareValue($value)
+    {
+        if (null !== $value) {
+            $value = abs((int) $value);
+        }
+
+        return $value;
     }
 }
