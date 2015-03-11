@@ -12,7 +12,7 @@ class ListResponse extends AbstractBaseResponse
      *
      * @JMS\SerializedName("events")
      */
-    private $events;
+    private $events = [];
 
     /**
      * @var int
