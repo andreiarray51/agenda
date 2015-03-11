@@ -69,8 +69,8 @@ class EventRepository extends AbstractEntityRepository
                 'e.description',
                 'e.due'
             )
-            ->setFirstResult($offset)
-            ->setMaxResults($limit)
+            ->setFirstResult(abs($offset))
+            ->setMaxResults(abs($limit))
             ->orderBy('e.due', 'asc')
             ->addOrderBy('e.createdAt', 'desc');
 
