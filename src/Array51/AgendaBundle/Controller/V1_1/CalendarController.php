@@ -51,7 +51,7 @@ class CalendarController extends Controller implements TokenAuthenticatedControl
      *      {
      *          "name"="month",
      *          "dataType"="text",
-     *          "required"="true",
+     *          "required"="false",
      *          "format"="YYYY-mm"
      *      }
      *  },

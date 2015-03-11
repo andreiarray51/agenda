@@ -27,16 +27,36 @@ class CalendarService extends AbstractBaseService
      */
     public function getMonth($month)
     {
-        $date = \DateTime::createFromFormat('Y-m', $month);
-        if (false === $date) {
-            throw new InvalidDateException(
-                'Invalid format for month, required format is YYYY-mm (2015-03)'
-            );
+        $date = $this->getDate($month);
+
+        return $this->eventRepository
+            ->getEventsCountByMonthDays($date['year'], $date['month']);
+    }
+
+    /**
+     * If empty month, returns data
+     * from current date, else from requested
+     *
+     * @param string $month
+     * @return array
+     * @throws InvalidDateException
+     */
+    private function getDate($month)
+    {
+        if (0 == strlen($month)) {
+            $date = new \DateTime();
+        } else {
+            $date = \DateTime::createFromFormat('Y-m', $month);
+            if (false === $date) {
+                throw new InvalidDateException(
+                    'Invalid format for month, required format is YYYY-mm (2015-03)'
+                );
+            }
         }
 
-        $year = $date->format('Y');
-        $month = $date->format('m');
-
-        return $this->eventRepository->getEventsCountByMonthDays($year, $month);
+        return [
+            'year' => $date->format('Y'),
+            'month' => $date->format('m'),
+        ];
     }
 }
