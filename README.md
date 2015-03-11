@@ -12,17 +12,25 @@ Version 1.0
 
 Events
 
-  * Add
+  * Add: [POST] /events
 
-  * Update
+  * Update: [PATCH] /events/{id}
 
-  * Delete
+  * Delete: [PATCH] /events/{id}
 
-  * List
+  * Get list: [GET] /events
+
+  * Get single event: [GET] /events/{id}
 
 
 Version 1.1
 
 Calendar
 
-  * List
+  * List events count by days of month: [GET] /calendar
+
+
+Documentation
+--------------
+
+Documentation and sandbox at root url (/).
