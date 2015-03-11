@@ -203,7 +203,7 @@ class EventController extends Controller
     public function listAction(Request $request)
     {
         $offset = $request->get('offset');
-        $limit = $request->get('offset');
+        $limit = $request->get('limit');
         $filters = [
             'due' => $request->get('due'),
         ];
