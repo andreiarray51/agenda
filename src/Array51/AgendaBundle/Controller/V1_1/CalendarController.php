@@ -52,7 +52,8 @@ class CalendarController extends Controller implements TokenAuthenticatedControl
      *          "name"="month",
      *          "dataType"="text",
      *          "required"="false",
-     *          "format"="YYYY-mm"
+     *          "format"="YYYY-mm",
+     *          "description"="If not sent, current month is used. Example: 2015-03."
      *      }
      *  },
      * statusCodes={
