@@ -16,7 +16,7 @@ Events
 
   * Update: [PATCH] /events/{id}
 
-  * Delete: [PATCH] /events/{id}
+  * Delete: [DELETE] /events/{id}
 
   * Get list: [GET] /events
 
