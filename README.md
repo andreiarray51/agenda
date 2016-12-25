@@ -1,14 +1,12 @@
-Array51 Agenda Application
-========================
+# Array51 Agenda Application
 
-Basic agenda application
+## Basic agenda application
 
-REST API
+### REST API
 
-Functions
---------------
+#### Functions
 
-Version 1.0
+##### Version 1.0
 
 Events
 
@@ -22,15 +20,13 @@ Events
 
   * Get single event: [GET] /events/{id}
 
-
-Version 1.1
+##### Version 1.1
 
 Calendar
 
   * List events count by days of month: [GET] /calendar
 
 
-Documentation
---------------
+#### Documentation
 
 Documentation and sandbox at root url (/).
